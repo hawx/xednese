@@ -1,5 +1,14 @@
+require 'net/http'
+require 'seq/paged'
+require 'serialisable'
+require 'time'
+
 require_relative 'xednese/client'
 require_relative 'xednese/version'
+
+require_relative 'xednese/responses/parser'
+require_relative 'xednese/responses/message_header'
+require_relative 'xednese/responses/message_headers'
 
 require_relative 'xednese/accounts'
 require_relative 'xednese/messages'

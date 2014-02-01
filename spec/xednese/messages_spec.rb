@@ -16,7 +16,7 @@ describe Esendex::Messages do
         .yields(200, xml)
         .returns(parsed_messages.messageheaders)
 
-      Esendex::Messages::Responses::MessageHeaders
+      Esendex::Responses::MessageHeaders
         .expects(:deserialise)
         .with(xml)
         .returns(parsed_messages)
@@ -40,7 +40,7 @@ describe Esendex::Messages do
         .yields(200, xml)
         .returns(parsed_message)
 
-      Esendex::Messages::Responses::MessageHeader
+      Esendex::Responses::MessageHeader
         .expects(:deserialise)
         .with(xml)
         .returns(parsed_message)

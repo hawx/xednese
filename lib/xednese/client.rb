@@ -1,5 +1,3 @@
-require 'net/http'
-
 class Esendex
   class Client
     ROOT = URI('https://api.esendex.com/')
