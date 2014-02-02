@@ -18,6 +18,19 @@ describe Esendex do
     end
   end
 
+  describe '#dispatcher' do
+    let(:dispatcher) { Object.new }
+
+    it 'returns a new Dispatcher instance' do
+      Esendex::Dispatcher
+        .expects(:new)
+        .with(credentials)
+        .returns(dispatcher)
+
+      subject.dispatcher.must_equal dispatcher
+    end
+  end
+
   describe '#messages' do
     let(:messages) { Object.new }
 
