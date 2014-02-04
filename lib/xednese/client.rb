@@ -5,7 +5,9 @@ class Esendex
     CONTENT_TYPE = "application/xml"
 
     def self.get(credentials, path, args={})
-      request = Net::HTTP::Get.new(url(path))
+      uri = url(path)
+      uri.query = URI.encode_www_form(args)
+      request = Net::HTTP::Get.new(uri)
 
       code, body = execute(credentials, request)
 

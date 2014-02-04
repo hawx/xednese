@@ -1,12 +1,19 @@
 class Esendex
   class Messages
+    PAGE_COUNT = 25
+
     def initialize(credentials)
       @credentials = credentials
     end
 
     def sent
       Seq::Paged.new do |page|
-        Client.get(@credentials, 'v1.0/messageheaders', page: page) do |status, data|
+        params = {
+          startIndex: PAGE_COUNT * page,
+          count: PAGE_COUNT
+        }
+
+        Client.get(@credentials, 'v1.0/messageheaders', params) do |status, data|
           Responses::MessageHeaders.deserialise(data).messageheaders
         end
       end

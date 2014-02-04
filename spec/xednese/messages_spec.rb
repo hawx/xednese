@@ -12,7 +12,7 @@ describe Esendex::Messages do
     before {
       Esendex::Client
         .expects(:get)
-        .with(credentials, 'v1.0/messageheaders', page: 0)
+        .with(credentials, 'v1.0/messageheaders', startIndex: 0, count: 25)
         .yields(200, xml)
         .returns(parsed_messages.messageheaders)
 

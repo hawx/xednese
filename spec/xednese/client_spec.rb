@@ -5,34 +5,37 @@ describe Esendex::Client do
 
   describe '.get' do
     let(:credentials) { dummy_credentials }
-
-    let(:path) { "some/url/path?query=yah" }
+    let(:path) { "some/url/path" }
+    let(:args) { { query: "what", thing: "yep" } }
 
     let(:expected_code) { 418 }
     let(:expected_body) { "Hi I'm a body" }
 
+    let(:uri) { mock }
+    let(:form_params) { mock }
     let(:http) { mock }
     let(:get_request) { mock }
 
     before {
+      URI.expects(:encode_www_form).with(args).returns(form_params)
+      uri.expects(:query=).with(form_params)
+      subject.expects(:url).with(path).returns(uri)
+
       subject
         .expects(:execute)
         .with(credentials, get_request)
         .returns([expected_code, expected_body])
 
-      Net::HTTP::Get
-        .expects(:new)
-        .with(subject::ROOT + path)
-        .returns(get_request)
+      Net::HTTP::Get.expects(:new).with(uri).returns(get_request)
     }
 
     it 'returns the expected status code' do
-      code, _ = subject.get(credentials, path)
+      code, _ = subject.get(credentials, path, args)
       code.must_equal expected_code
     end
 
     it 'returns the expected body' do
-      _, body = subject.get(credentials, path)
+      _, body = subject.get(credentials, path, args)
       body.must_equal expected_body
     end
   end
