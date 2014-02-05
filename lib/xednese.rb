@@ -10,6 +10,8 @@ require_relative 'xednese/version'
 require_relative 'xednese/requests/messages'
 
 require_relative 'xednese/responses/parser'
+require_relative 'xednese/responses/account'
+require_relative 'xednese/responses/accounts'
 require_relative 'xednese/responses/message_dispatcher_headers'
 require_relative 'xednese/responses/message_header'
 require_relative 'xednese/responses/message_headers'
