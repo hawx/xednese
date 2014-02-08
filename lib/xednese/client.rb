@@ -1,7 +1,7 @@
 class Esendex
   class Client
     ROOT = URI('https://api.esendex.com/')
-    USER_AGENT = "ruby/xednese-0.0.0"
+    USER_AGENT = "ruby/xednese-#{VERSION}"
     CONTENT_TYPE = "application/xml"
 
     def self.get(credentials, path, args={})

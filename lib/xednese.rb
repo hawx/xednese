@@ -4,8 +4,8 @@ require 'seq/paged'
 require 'serialisable'
 require 'time'
 
-require_relative 'xednese/client'
 require_relative 'xednese/version'
+require_relative 'xednese/client'
 
 require_relative 'xednese/requests/messages'
 
