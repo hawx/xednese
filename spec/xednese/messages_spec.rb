@@ -7,14 +7,14 @@ describe Esendex::Messages do
   describe '#sent' do
     let(:xml) { "Hey I'm xml" }
     let(:first_message) { Object.new }
-    let(:parsed_messages) { stub(messageheaders: [first_message]) }
+    let(:parsed_messages) { stub(message_headers: [first_message]) }
 
     before {
       Esendex::Client
         .expects(:get)
         .with(credentials, 'v1.0/messageheaders', startIndex: 0, count: 25)
         .yields(200, xml)
-        .returns(parsed_messages.messageheaders)
+        .returns(parsed_messages.message_headers)
 
       Esendex::Responses::MessageHeaders
         .expects(:deserialise)
