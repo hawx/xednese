@@ -14,7 +14,7 @@ class Esendex
         }
 
         Client.get(@credentials, 'v1.0/messageheaders', params) do |status, data|
-          Responses::MessageHeaders.deserialise(data).messageheaders
+          Responses::MessageHeaders.deserialise(data).message_headers
         end
       end
     end
