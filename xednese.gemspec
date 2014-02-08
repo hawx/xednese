@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'minitest', '~> 5.2'
   s.add_development_dependency 'mocha', '~> 1.0'
 
-  s.files        = %w(README.md Rakefile LICENCE)
+  s.files        = %w(README.md Gemfile Rakefile LICENCE)
   s.files       += Dir["{lib,spec}/**/*"] & `git ls-files`.split("\n")
   s.test_files   = Dir["spec/**/*"] & `git ls-files`.split("\n")
 end
