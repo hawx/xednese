@@ -5,7 +5,7 @@ describe Esendex do
   subject { dummy_esendex }
   let(:credentials) { subject.instance_variable_get(:@credentials) }
 
-  describe '#account' do
+  describe '#accounts' do
     let(:account) { Object.new }
 
     it 'returns a new Accounts instance' do
@@ -14,7 +14,7 @@ describe Esendex do
         .with(credentials)
         .returns(account)
 
-      subject.account.must_equal account
+      subject.accounts.must_equal account
     end
   end
 
@@ -44,7 +44,7 @@ describe Esendex do
     end
   end
 
-  describe '#user' do
+  describe '#users' do
     let(:user) { Object.new }
 
     it 'returns a new Users instance' do
@@ -53,7 +53,7 @@ describe Esendex do
         .with(credentials)
         .returns(user)
 
-      subject.user.must_equal user
+      subject.users.must_equal user
     end
   end
 end

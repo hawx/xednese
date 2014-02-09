@@ -2,10 +2,15 @@ class Esendex
   class Messages
     PAGE_COUNT = 25
 
+    # @see Esendex#messages
+    # @api private
     def initialize(credentials)
       @credentials = credentials
     end
 
+    # @return [Enumerable<Responses::MessageHeader>] an Enumerable that iterates
+    #   over all sent messages. Requests are made for fixed size pages when
+    #   required.
     def sent
       Seq::Paged.new do |page|
         params = {
@@ -19,6 +24,9 @@ class Esendex
       end
     end
 
+    # @param id [String] the id of the message to get
+    # @return [Responses::MessageHeader] the MessageHeader specified by the id
+    #   given
     def get(id)
       Client.get(@credentials, "v1.0/messageheaders/#{id}") do |status, data|
         Responses::MessageHeader.deserialise(data)

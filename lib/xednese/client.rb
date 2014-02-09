@@ -1,9 +1,18 @@
 class Esendex
+
+  # Client is a wrapper for Net::HTTP for calling through to the Esendex REST
+  # API.
   class Client
     ROOT = URI('https://api.esendex.com/')
     USER_AGENT = "ruby/xednese-#{VERSION}"
     CONTENT_TYPE = "application/xml"
 
+    # @param credentials [Credentials]
+    # @param path [String] Path to GET (after the api.esendex.com/ part)
+    # @param args [Hash] An optional hash of query parameters to be appended to
+    #   the url.
+    #
+    # @return [Integer, String] Returns the status code and the response body.
     def self.get(credentials, path, args={})
       uri = url(path)
       uri.query = URI.encode_www_form(args)
@@ -14,6 +23,13 @@ class Esendex
       block_given? ? yield(code, body) : [code, body]
     end
 
+    # @param credentials [Credentials]
+    # @param path [String] Path to POST to
+    # @param object [#serialise] The object that represents the content to be
+    #   posted. This must be an object with a method #serialise that returns a
+    #   string of xml.
+    #
+    # @return [Integer, String] Returns the status code and the response body.
     def self.post(credentials, path, object)
       request = Net::HTTP::Post.new(url(path))
       request.body = object.serialise

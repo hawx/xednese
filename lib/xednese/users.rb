@@ -1,15 +1,10 @@
 class Esendex
   class Users
+
+    # @see Esendex#users
+    # @api private
     def initialize(credentials)
       @credentials = credentials
-    end
-
-    def username
-      @credentials.username
-    end
-
-    def password
-      @credentials.password
     end
   end
 end

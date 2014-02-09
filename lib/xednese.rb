@@ -24,22 +24,32 @@ require_relative 'xednese/users'
 class Esendex
   Credentials = Struct.new(:username, :password, :account_reference)
 
+  # @param username [String]
+  # @param password [String]
+  # @param account_reference [String]
   def initialize(username, password, account_reference)
     @credentials = Credentials.new(username, password, account_reference)
   end
 
-  def account
+  # @return [Accounts, Enumerable]
+  # @see http://developers.esendex.com/APIs/REST-API/accounts
+  def accounts
     Accounts.new(@credentials)
   end
 
+  # @return [Dispatcher]
+  # @see http://developers.esendex.com/APIs/REST-API/messagedispatcher
   def dispatcher
     Dispatcher.new(@credentials)
   end
 
-  def user
+  # @return [Users]
+  def users
     Users.new(@credentials)
   end
 
+  # @return [Messages]
+  # @see http://developers.esendex.com/APIs/REST-API/messageheaders
   def messages
     Messages.new(@credentials)
   end
