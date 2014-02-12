@@ -24,6 +24,22 @@ class Esendex
       end
     end
 
+    # @return [Enumerable<Responses::MessageHeader>] an Enumerable that iterates
+    #   over all received messages. Requests are made for fixed size pages when
+    #   required.
+    def received
+      Seq::Paged.new do |page|
+        params = {
+          startIndex: PAGE_COUNT * page,
+          count: PAGE_COUNT
+        }
+
+        Client.get(@credentials, 'v1.0/inbox/messages', params) do |status, data|
+          Responses::MessageHeaders.deserialise(data).message_headers
+        end
+      end
+    end
+
     # @param id [String] the id of the message to get
     # @return [Responses::MessageHeader] the MessageHeader specified by the id
     #   given
