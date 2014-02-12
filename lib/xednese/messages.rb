@@ -34,7 +34,7 @@ class Esendex
           count: PAGE_COUNT
         }
 
-        Client.get(@credentials, 'v1.0/inbox/messages', params) do |status, data|
+        Client.get(@credentials, "v1.0/inbox/#{@credentials.account_reference}/messages", params) do |status, data|
           Responses::MessageHeaders.deserialise(data).message_headers
         end
       end
