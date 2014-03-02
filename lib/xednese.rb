@@ -19,9 +19,9 @@ require_relative 'xednese/responses/message_headers'
 
 require_relative 'xednese/account'
 require_relative 'xednese/accounts'
-require_relative 'xednese/dispatcher'
 require_relative 'xednese/messages'
 require_relative 'xednese/users'
+require_relative 'xednese/account/dispatcher'
 
 class Esendex
   Credentials = Struct.new(:username, :password)

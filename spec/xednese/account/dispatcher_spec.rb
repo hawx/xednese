@@ -1,4 +1,4 @@
-require_relative '../helper'
+require_relative '../../helper'
 
 describe Esendex::Dispatcher do
   let(:reference)   { mock }
