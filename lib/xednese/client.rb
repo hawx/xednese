@@ -40,6 +40,23 @@ class Esendex
       block_given? ? yield(code, body) : [code, body]
     end
 
+    # @param credentials [Credentials]
+    # @param path [String] Path to PUT to
+    # @param object [#serialise] The object that represents the content to be
+    #   posted. This must be an object with a method #serialise that returns a
+    #   string of xml.
+    #
+    # @return [Integer, String] Returns the status code and the response body.
+    def self.put(credentials, path, object)
+      request = Net::HTTP::Put.new(url(path))
+      request.body = object.serialise
+      request.content_type = CONTENT_TYPE
+
+      code, body = execute(credentials, request)
+
+      block_given? ? yield(code, body) : [code, body]
+    end
+
     private
 
     def self.url(path)

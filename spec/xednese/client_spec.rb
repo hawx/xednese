@@ -83,6 +83,48 @@ describe Esendex::Client do
     end
   end
 
+  describe '.put' do
+    let(:credentials) { dummy_credentials }
+
+    let(:path) { "some/url/path?query=yah" }
+
+    let(:expected_code) { 418 }
+    let(:expected_body) { "Hi I'm a body" }
+
+    let(:xml) { "</xml>" }
+    let(:serialisable_object) { stub(serialise: xml) }
+    let(:post_request) { mock }
+
+    before {
+      subject
+        .expects(:execute)
+        .with(credentials, post_request)
+        .returns([expected_code, expected_body])
+
+      Net::HTTP::Put
+        .expects(:new)
+        .with(subject::ROOT + path)
+        .returns(post_request)
+
+      post_request
+        .expects(:body=)
+        .with(xml)
+
+      post_request
+        .expects(:content_type=)
+        .with('application/xml')
+    }
+
+    it 'returns the expected status code' do
+      code, _ = subject.put(credentials, path, serialisable_object)
+      code.must_equal expected_code
+    end
+
+    it 'returns the expected body' do
+      _, body = subject.put(credentials, path, serialisable_object)
+      body.must_equal expected_body
+    end
+  end
 
   describe '.execute' do
     let(:username) { 'myusername' }

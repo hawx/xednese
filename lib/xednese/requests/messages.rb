@@ -6,7 +6,7 @@ class Esendex
       end
 
       def serialise
-        Nokogiri::XML::Builder.new(:encoding => 'utf-8') do |xml|
+        Nokogiri::XML::Builder.new(encoding: 'utf-8') do |xml|
           xml.messages {
             xml.accountreference @args[:account_reference]
 
