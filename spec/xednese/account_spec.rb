@@ -5,8 +5,8 @@ describe Esendex::Account do
   let(:credentials) { dummy_credentials }
   subject { Esendex::Account.new(credentials, response) }
 
-  [:id, :reference, :address, :type,
-   :messages, :expires_on, :role].each do |value|
+  [:id, :reference, :address, :messages_remaining,
+   :type, :expires_on, :role].each do |value|
     describe "##{value}" do
       before     {
         @value = mock
@@ -66,12 +66,28 @@ describe Esendex::Account do
     it 'returns a new Dispatcher instance' do
       subject.expects(:reference).returns(reference)
 
-      Esendex::Dispatcher
+      Esendex::Account::Dispatcher
         .expects(:new)
         .with(credentials, reference)
         .returns(dispatcher)
 
       subject.dispatcher.must_equal dispatcher
+    end
+  end
+
+  describe '#messages' do
+    let(:reference) { mock }
+    let(:messages)  { mock }
+
+    it 'returns a new Messages instance' do
+      subject.expects(:reference).returns(reference)
+
+      Esendex::Account::Messages
+        .expects(:new)
+        .with(credentials, reference)
+        .returns(messages)
+
+      subject.messages.must_equal messages
     end
   end
 end

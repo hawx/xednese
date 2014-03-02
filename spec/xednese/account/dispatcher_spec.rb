@@ -1,9 +1,9 @@
 require_relative '../../helper'
 
-describe Esendex::Dispatcher do
+describe Esendex::Account::Dispatcher do
   let(:reference)   { mock }
   let(:credentials) { dummy_credentials }
-  subject           { Esendex::Dispatcher.new(credentials, reference) }
+  subject { Esendex::Account::Dispatcher.new(credentials, reference) }
 
   describe '.send' do
     let(:body) { 'Hey I am message' }

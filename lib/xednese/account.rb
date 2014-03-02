@@ -12,6 +12,10 @@ class Esendex
       Dispatcher.new(@credentials, reference)
     end
 
+    def messages
+      Messages.new(@credentials, reference)
+    end
+
     def id
       @response.id
     end
@@ -32,8 +36,8 @@ class Esendex
       @response.type
     end
 
-    def messages
-      @response.messages
+    def messages_remaining
+      @response.messages_remaining
     end
 
     def expires_on
