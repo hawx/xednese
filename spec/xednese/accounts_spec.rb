@@ -54,7 +54,7 @@ describe Esendex::Accounts do
         .returns(account)
     }
 
-    it 'retrieves the specified accounts' do
+    it 'retrieves the specified account' do
       subject.get(id).must_equal account
     end
   end

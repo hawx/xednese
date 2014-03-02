@@ -13,12 +13,16 @@ require_relative 'xednese/requests/messages'
 require_relative 'xednese/responses/parser'
 require_relative 'xednese/responses/account'
 require_relative 'xednese/responses/accounts'
+require_relative 'xednese/responses/status'
+require_relative 'xednese/responses/batch'
+require_relative 'xednese/responses/batches'
 require_relative 'xednese/responses/message_dispatcher_headers'
 require_relative 'xednese/responses/message_header'
 require_relative 'xednese/responses/message_headers'
 
 require_relative 'xednese/account'
 require_relative 'xednese/accounts'
+require_relative 'xednese/batches'
 require_relative 'xednese/messages'
 require_relative 'xednese/users'
 
@@ -52,6 +56,12 @@ class Esendex
   # @return [Users]
   def users
     Users.new(@credentials)
+  end
+
+  # @return [Batches]
+  # @see http://developers.esendex.com/APIs/REST-API/messagebatches
+  def batches
+    Batches.new(@credentials)
   end
 
   # @return [Messages]

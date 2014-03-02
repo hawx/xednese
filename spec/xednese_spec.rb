@@ -65,6 +65,19 @@ describe Esendex do
     end
   end
 
+  describe '#batches' do
+    let(:batches) { mock }
+
+    it 'returns a new Batches instance' do
+      Esendex::Batches
+        .expects(:new)
+        .with(credentials)
+        .returns(batches)
+
+      subject.batches.must_equal batches
+    end
+  end
+
   describe '#messages' do
     let(:messages) { Object.new }
 
