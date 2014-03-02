@@ -1,8 +1,9 @@
 require_relative '../helper'
 
 describe Esendex::Dispatcher do
+  let(:reference)   { mock }
   let(:credentials) { dummy_credentials }
-  subject { Esendex::Dispatcher.new(credentials) }
+  subject           { Esendex::Dispatcher.new(credentials, reference) }
 
   describe '.send' do
     let(:body) { 'Hey I am message' }
@@ -13,7 +14,7 @@ describe Esendex::Dispatcher do
 
     before {
       args = {
-        account_reference: credentials.account_reference,
+        account_reference: reference,
         messages: [{ to: to, body: body }]
       }
 

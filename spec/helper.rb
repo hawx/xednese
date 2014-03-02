@@ -5,9 +5,9 @@ require 'mocha/mini_test'
 require_relative '../lib/xednese'
 
 def dummy_esendex
-  Esendex.new('what', 'when', 'really?')
+  Esendex.new('what', 'when')
 end
 
 def dummy_credentials
-  Esendex::Credentials.new('user', 'pass', 'what?')
+  Esendex::Credentials.new('user', 'pass')
 end

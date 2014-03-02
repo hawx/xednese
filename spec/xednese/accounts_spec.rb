@@ -1,7 +1,7 @@
 require_relative '../helper'
 
 describe Esendex::Accounts do
-  let(:credentials) { Esendex::Credentials.new('user', 'pass', 'ref') }
+  let(:credentials) { dummy_credentials }
   subject { Esendex::Accounts.new(credentials) }
 
   describe '#each' do

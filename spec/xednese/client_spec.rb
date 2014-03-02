@@ -129,7 +129,7 @@ describe Esendex::Client do
   describe '.execute' do
     let(:username) { 'myusername' }
     let(:password) { 'mypassword' }
-    let(:credentials) { Esendex::Credentials.new(username, password, 'EX00') }
+    let(:credentials) { Esendex::Credentials.new(username, password) }
 
     let(:expected_code) { 418 }
     let(:expected_body) { "Hi I'm a body" }

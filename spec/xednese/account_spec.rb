@@ -1,16 +1,43 @@
 require_relative '../helper'
 
 describe Esendex::Account do
-  let(:id) { "D35FA8EB-3C12-4E8E-8DEC-8568B2F35890" }
+  let(:response)   { mock }
   let(:credentials) { dummy_credentials }
+  subject { Esendex::Account.new(credentials, response) }
 
-  subject { Esendex::Account.new(credentials, id) }
+  [:id, :reference, :address, :type,
+   :messages, :expires_on, :role].each do |value|
+    describe "##{value}" do
+      before     {
+        @value = mock
+        response.expects(value).returns(@value)
+      }
+
+      it "returns the #{value} from the response" do
+        subject.send(value).must_equal @value
+      end
+    end
+  end
+
+  describe '#label' do
+    let(:label) { mock }
+    before      { response.expects(:label).returns(label) }
+
+    it 'returns the label from the response' do
+      subject.label.must_equal label
+    end
+  end
 
   describe '#label=' do
+    let(:id)        { "587329572387275372" }
     let(:new_label) { "this is my account" }
-    let(:request) { mock }
+    let(:request)   { mock }
 
     before {
+      subject
+        .expects(:id)
+        .returns(id)
+
       Esendex::Requests::Account
         .expects(:new)
         .with(label: new_label)
@@ -24,6 +51,27 @@ describe Esendex::Account do
 
     it 'sets the label for the account' do
       (subject.label = new_label).must_equal new_label
+    end
+
+    it 'makes #label return the new label' do
+      subject.label = new_label
+      subject.label.must_equal new_label
+    end
+  end
+
+  describe '#dispatcher' do
+    let(:reference)  { mock }
+    let(:dispatcher) { mock }
+
+    it 'returns a new Dispatcher instance' do
+      subject.expects(:reference).returns(reference)
+
+      Esendex::Dispatcher
+        .expects(:new)
+        .with(credentials, reference)
+        .returns(dispatcher)
+
+      subject.dispatcher.must_equal dispatcher
     end
   end
 end

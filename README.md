@@ -3,11 +3,12 @@
 ``` ruby
 require 'xednese'
 
-esendex = Esendex.new('me@company.com', 'password', 'account reference')
-p esendex.messages.sent.first.body
+esendex = Esendex.new('me@company.com', 'password')
+p esendex.messages.sent.first.summary
 #=> "..."
 
-response = esendex.dispatcher.send('Hey guys', '445275XXX')
+account = esendex.account("EX0000")
+response = account.dispatcher.send('Hey guys', '445275XXX')
 p response.message_headers.map(&:id)
 #=> ["..."]
 ```

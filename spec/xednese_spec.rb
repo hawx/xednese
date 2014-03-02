@@ -5,29 +5,63 @@ describe Esendex do
   subject { dummy_esendex }
   let(:credentials) { subject.instance_variable_get(:@credentials) }
 
+  describe '#account' do
+    let(:reference) { mock }
+    let(:accounts)  { mock }
+
+    describe 'when account exists' do
+      let(:response)  { mock }
+      let(:account)   { mock }
+
+      before {
+        Esendex::Accounts
+          .expects(:new)
+          .with(credentials)
+          .returns(accounts)
+
+        accounts
+          .expects(:find)
+          .returns(response)
+
+        Esendex::Account
+          .expects(:new)
+          .with(credentials, response)
+          .returns(account)
+      }
+
+      it 'returns the Account with that reference' do
+        subject.account(reference).must_equal account
+      end
+    end
+
+    describe 'when account does not exist' do
+      before {
+        Esendex::Accounts
+          .expects(:new)
+          .with(credentials)
+          .returns(accounts)
+
+        accounts
+          .expects(:find)
+          .returns(nil)
+      }
+
+      it 'is nil' do
+        subject.account(reference).must_equal nil
+      end
+    end
+  end
+
   describe '#accounts' do
-    let(:account) { Object.new }
+    let(:accounts) { Object.new }
 
     it 'returns a new Accounts instance' do
       Esendex::Accounts
         .expects(:new)
         .with(credentials)
-        .returns(account)
+        .returns(accounts)
 
-      subject.accounts.must_equal account
-    end
-  end
-
-  describe '#dispatcher' do
-    let(:dispatcher) { Object.new }
-
-    it 'returns a new Dispatcher instance' do
-      Esendex::Dispatcher
-        .expects(:new)
-        .with(credentials)
-        .returns(dispatcher)
-
-      subject.dispatcher.must_equal dispatcher
+      subject.accounts.must_equal accounts
     end
   end
 

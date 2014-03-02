@@ -3,8 +3,9 @@ class Esendex
 
     # @see Esendex#dispatcher
     # @api private
-    def initialize(credentials)
+    def initialize(credentials, reference)
       @credentials = credentials
+      @reference = reference
     end
 
     # Sends a message to a single recipient.
@@ -13,7 +14,7 @@ class Esendex
     # @return [Responses::MessageDispatcherHeaders]
     def send(body, to)
       args = {
-        account_reference: @credentials.account_reference,
+        account_reference: @reference,
         messages: [{to: to, body: body}]
       }
 
