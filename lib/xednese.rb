@@ -44,12 +44,10 @@ class Esendex
   # @return [Account]
   # @see http://developers.esendex.com/APIs/REST-API/accounts
   def account(reference)
-    response = accounts.find {|a| a.reference == reference }
-
-    response ? Account.new(@credentials, response) : nil
+    accounts.find {|a| a.reference == reference }
   end
 
-  # @return [Accounts, Enumerable]
+  # @return [Accounts]
   # @see http://developers.esendex.com/APIs/REST-API/accounts
   def accounts
     Accounts.new(@credentials)

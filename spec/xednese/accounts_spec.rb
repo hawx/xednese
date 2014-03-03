@@ -6,8 +6,9 @@ describe Esendex::Accounts do
 
   describe '#each' do
     let(:data) { mock }
+    let(:data_list) { [mock, mock] }
+    let(:accounts) { stub(accounts: data_list) }
     let(:account_list) { [mock, mock] }
-    let(:accounts) { stub(accounts: account_list) }
 
     before {
       Esendex::Client
@@ -23,7 +24,11 @@ describe Esendex::Accounts do
 
       accounts
         .expects(:accounts)
-        .returns(account_list)
+        .returns(data_list)
+
+      data_list.zip(account_list).each do |d, a|
+        Esendex::Account.expects(:new).with(credentials, d).returns(a)
+      end
     }
 
     it 'retrieves all accounts' do
@@ -37,9 +42,10 @@ describe Esendex::Accounts do
   end
 
   describe '#get' do
-    let(:id) { "heyohid" }
-    let(:data) { mock }
-    let(:account) { mock }
+    let(:id)       { SecureRandom.uuid }
+    let(:data)     { mock }
+    let(:response) { mock }
+    let(:account)  { mock }
 
     before {
       Esendex::Client
@@ -51,6 +57,11 @@ describe Esendex::Accounts do
       Esendex::Responses::Account
         .expects(:deserialise)
         .with(data)
+        .returns(response)
+
+      Esendex::Account
+        .expects(:new)
+        .with(credentials, response)
         .returns(account)
     }
 

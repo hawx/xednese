@@ -6,27 +6,19 @@ describe Esendex do
   let(:credentials) { subject.instance_variable_get(:@credentials) }
 
   describe '#account' do
-    let(:reference) { mock }
-    let(:accounts)  { mock }
-
     describe 'when account exists' do
-      let(:response)  { mock }
-      let(:account)   { mock }
+      let(:reference) { mock }
+      let(:account)   { mock(reference: reference) }
+      let(:accounts)  { [stub(reference: mock),
+                         stub(reference: mock),
+                         account,
+                         stub(reference: mock)] }
 
       before {
         Esendex::Accounts
           .expects(:new)
           .with(credentials)
           .returns(accounts)
-
-        accounts
-          .expects(:find)
-          .returns(response)
-
-        Esendex::Account
-          .expects(:new)
-          .with(credentials, response)
-          .returns(account)
       }
 
       it 'returns the Account with that reference' do
@@ -35,15 +27,16 @@ describe Esendex do
     end
 
     describe 'when account does not exist' do
+      let(:reference) { mock }
+      let(:accounts)  { [stub(reference: mock),
+                         stub(reference: mock),
+                         stub(reference: mock)] }
+
       before {
         Esendex::Accounts
           .expects(:new)
           .with(credentials)
           .returns(accounts)
-
-        accounts
-          .expects(:find)
-          .returns(nil)
       }
 
       it 'is nil' do

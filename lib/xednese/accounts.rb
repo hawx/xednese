@@ -10,21 +10,23 @@ class Esendex
       @credentials = credentials
     end
 
-    # @yield [Responses::Account] Calls the provided block with each account the user
-    #   has access to
+    # @yield [Account] Calls the provided block with each account the user has
+    #   access to
     def each(&block)
       Client.get(@credentials, 'v1.0/accounts') {|status, data|
-        Responses::Accounts.deserialise(data).accounts
+        Responses::Accounts.deserialise(data).accounts.map do |account|
+          Account.new(@credentials, account)
+        end
       }.each(&block)
     end
 
     include Enumerable
 
     # @param id [String] the id of the account to return
-    # @return [Responses::Account] Returns the account with the given id.
+    # @return [Account] Returns the account with the given id.
     def get(id)
       Client.get(@credentials, "v1.0/accounts/#{id}") do |status, data|
-        Responses::Account.deserialise(data)
+        Account.new @credentials, Responses::Account.deserialise(data)
       end
     end
   end
