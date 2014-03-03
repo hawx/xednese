@@ -90,4 +90,32 @@ describe Esendex::Batch do
       subject.cancel!
     end
   end
+
+  describe '#messages' do
+    let(:id) { SecureRandom.uuid }
+    let(:xml) { mock }
+    let(:first_message) { mock }
+    let(:parsed_messages) { stub(message_headers: [first_message]) }
+
+    before {
+      subject.expects(:id).returns(id)
+
+      Esendex::Client
+        .expects(:get)
+        .with(credentials, "v1.0/messagebatches/#{id}/messages",
+              startIndex: 0, count: 25)
+        .yields(200, xml)
+        .returns(parsed_messages.message_headers)
+
+      Esendex::Responses::MessageHeaders
+        .expects(:deserialise)
+        .with(xml)
+        .returns(parsed_messages)
+    }
+
+    it 'returns the messages in the batch' do
+      messages = subject.messages
+      messages.first.must_equal first_message
+    end
+  end
 end

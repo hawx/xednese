@@ -1,6 +1,9 @@
 class Esendex
-
   class Batch
+    PAGE_COUNT = 25
+
+    # @see Esendex#batches
+    # @api private
     def initialize(credentials, response)
       @credentials = credentials
       @response = response
@@ -44,6 +47,22 @@ class Esendex
 
     def cancel!
       Client.delete(@credentials, "v1.1/messagebatches/#{id}/schedule")
+    end
+
+    # @return [Enumerable<Responses::MessageHeader>] an Enumerable that iterates
+    #   over all messages in the batch. Requests are made for fixed size pages
+    #   when required.
+    def messages
+      Seq::Paged.new do |page|
+        params = {
+          startIndex: PAGE_COUNT * page,
+          count: PAGE_COUNT
+        }
+
+        Client.get(@credentials, "v1.0/messagebatches/#{id}/messages", params) do |status, data|
+          Responses::MessageHeaders.deserialise(data).message_headers
+        end
+      end
     end
   end
 end
