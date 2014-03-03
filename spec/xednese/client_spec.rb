@@ -39,6 +39,38 @@ describe Esendex::Client do
       body.must_equal expected_body
     end
   end
+  describe '.get' do
+    let(:credentials) { dummy_credentials }
+    let(:path) { "some/url/path" }
+
+    let(:expected_code) { 418 }
+    let(:expected_body) { "Hi I'm a body" }
+
+    let(:uri) { mock }
+    let(:http) { mock }
+    let(:get_request) { mock }
+
+    before {
+      subject.expects(:url).with(path).returns(uri)
+
+      subject
+        .expects(:execute)
+        .with(credentials, get_request)
+        .returns([expected_code, expected_body])
+
+      Net::HTTP::Delete.expects(:new).with(uri).returns(get_request)
+    }
+
+    it 'returns the expected status code' do
+      code, _ = subject.delete(credentials, path)
+      code.must_equal expected_code
+    end
+
+    it 'returns the expected body' do
+      _, body = subject.delete(credentials, path)
+      body.must_equal expected_body
+    end
+  end
 
   describe '.post' do
     let(:credentials) { dummy_credentials }

@@ -12,40 +12,18 @@ class Esendex
       Dispatcher.new(@credentials, reference)
     end
 
+    # @return [Messages]
     def messages
       Messages.new(@credentials, reference)
     end
 
-    def id
-      @response.id
-    end
+    extend Forwardable
 
-    def reference
-      @response.reference
-    end
+    def_delegators :@response, :id, :reference, :address, :type,
+                   :messages_remaining, :expires_on, :role
 
     def label
       @label || @response.label
-    end
-
-    def address
-      @response.address
-    end
-
-    def type
-      @response.type
-    end
-
-    def messages_remaining
-      @response.messages_remaining
-    end
-
-    def expires_on
-      @response.expires_on
-    end
-
-    def role
-      @response.role
     end
 
     def label=(value)

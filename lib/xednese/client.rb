@@ -24,6 +24,19 @@ class Esendex
     end
 
     # @param credentials [Credentials]
+    # @param path [String] Path to DELETE
+    #
+    # @return [Integer, String] Returns the status code and the response body.
+    def self.delete(credentials, path)
+      uri = url(path)
+      request = Net::HTTP::Delete.new(uri)
+
+      code, body = execute(credentials, request)
+
+      block_given? ? yield(code, body) : [code, body]
+    end
+
+    # @param credentials [Credentials]
     # @param path [String] Path to POST to
     # @param object [#serialise] The object that represents the content to be
     #   posted. This must be an object with a method #serialise that returns a

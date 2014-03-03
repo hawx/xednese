@@ -6,8 +6,9 @@ describe Esendex::Batches do
 
   describe '#each' do
     let(:data) { mock }
+    let(:data_list) { [mock, mock] }
+    let(:batches) { stub(batches: data_list) }
     let(:batch_list) { [mock, mock] }
-    let(:batches) { stub(batches: batch_list) }
 
     before {
       Esendex::Client
@@ -21,7 +22,11 @@ describe Esendex::Batches do
         .with(data)
         .returns(batches)
 
-      batches.expects(:batches).returns(batches)
+      batches.expects(:batches).returns(data_list)
+
+      data_list.zip(batch_list).each do |d, b|
+        Esendex::Batch.expects(:new).with(credentials, d).returns(b)
+      end
     }
 
     it 'retrieves all batches' do
@@ -35,9 +40,10 @@ describe Esendex::Batches do
   end
 
   describe '#get' do
-    let(:id)    { "heyimanid" }
-    let(:data)  { mock }
-    let(:batch) { mock }
+    let(:id)       { SecureRandom.uuid }
+    let(:data)     { mock }
+    let(:response) { mock }
+    let(:batch)    { mock }
 
     before {
       Esendex::Client
@@ -49,6 +55,11 @@ describe Esendex::Batches do
       Esendex::Responses::Batch
         .expects(:deserialise)
         .with(data)
+        .returns(response)
+
+      Esendex::Batch
+        .expects(:new)
+        .with(credentials, response)
         .returns(batch)
     }
 
