@@ -8,6 +8,7 @@ require_relative 'xednese/version'
 require_relative 'xednese/client'
 
 require_relative 'xednese/requests/account'
+require_relative 'xednese/requests/batch'
 require_relative 'xednese/requests/messages'
 
 require_relative 'xednese/responses/parser'
@@ -22,6 +23,7 @@ require_relative 'xednese/responses/message_headers'
 
 require_relative 'xednese/account'
 require_relative 'xednese/accounts'
+require_relative 'xednese/batch'
 require_relative 'xednese/batches'
 require_relative 'xednese/messages'
 require_relative 'xednese/users'
