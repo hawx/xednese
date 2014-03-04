@@ -1,4 +1,4 @@
-require_relative '../helper'
+require 'helper'
 
 describe Esendex::Messages do
   subject { dummy_esendex }

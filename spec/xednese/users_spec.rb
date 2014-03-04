@@ -1,4 +1,4 @@
-require_relative '../helper'
+require 'helper'
 
 describe Esendex::Users do
   let(:credentials) { Esendex::Credentials.new('user', 'pass', 'ref') }

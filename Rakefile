@@ -1,15 +1,15 @@
 require 'rake/testtask'
 
-Rake::TestTask.new(:unit) do |t|
+Rake::TestTask.new(:spec) do |t|
   t.libs << 'lib' << 'spec'
-  t.pattern = 'spec/{xednese/**/*_spec.rb,*_spec.rb}'
+  t.pattern = 'spec/**/*_spec.rb'
   t.verbose = true
 end
 
 Rake::TestTask.new(:acceptance) do |t|
-  t.libs << 'lib' << 'spec'
-  t.pattern = 'spec/acceptance/*_spec.rb'
+  t.libs << 'lib' << 'scenarios'
+  t.pattern = 'scenarios/*/*.rb'
   t.verbose = true
 end
 
-task :default => [:unit, :acceptance]
+task :default => [:spec, :acceptance]

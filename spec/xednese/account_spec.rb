@@ -1,4 +1,4 @@
-require_relative '../helper'
+require 'helper'
 
 describe Esendex::Account do
   let(:response)   { mock }

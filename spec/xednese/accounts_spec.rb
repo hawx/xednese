@@ -1,4 +1,4 @@
-require_relative '../helper'
+require 'helper'
 
 describe Esendex::Accounts do
   let(:credentials) { dummy_credentials }

@@ -1,5 +1,7 @@
-require_relative '../helper'
+require 'minitest/autorun'
+require 'minitest/pride'
 require 'webmock/minitest'
+require 'xednese'
 
 class String
   def self.generate(length = 25)

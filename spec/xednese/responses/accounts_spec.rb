@@ -1,4 +1,4 @@
-require_relative '../../helper'
+require 'helper'
 
 describe Esendex::Responses::Accounts do
   describe '.deserialise' do

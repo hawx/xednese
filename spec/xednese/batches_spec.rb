@@ -1,4 +1,4 @@
-require_relative '../helper'
+require 'helper'
 
 describe Esendex::Batches do
   let(:credentials) { dummy_credentials }

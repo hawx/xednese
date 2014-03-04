@@ -1,4 +1,4 @@
-require_relative '../../helper'
+require 'helper'
 
 describe Esendex::Requests::Batch do
   subject { Esendex::Requests::Batch }

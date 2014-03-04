@@ -1,4 +1,4 @@
-require_relative '../../helper'
+require 'helper'
 
 describe Esendex::Requests::Account do
   subject { Esendex::Requests::Account }
