@@ -70,8 +70,9 @@ class Account
     @hsh = hsh
   end
 
-  def to_xml
-    <<EOS
+  def to_xml(partial = false)
+    if partial
+      <<EOS
 <account id="#{id}" uri="#{uri}">
   <reference>#{reference}</reference>
   <label>#{label}</label>
@@ -83,6 +84,21 @@ class Account
   <settings uri="#{settingsuri}" />
 </account>
 EOS
+    else
+      <<EOS
+<?xml version="1.0" encoding="utf-8"?>
+<account id="#{id}" uri="#{uri}" xmlns="http://api.esendex.com/ns/">
+  <reference>#{reference}</reference>
+  <label>#{label}</label>
+  <address>#{address}</address>
+  <type>#{type}</type>
+  <messagesremaining>#{messagesremaining}</messagesremaining>
+  <expireson>#{expireson}</expireson>
+  <role>#{role}</role>
+  <settings uri="#{settingsuri}" />
+</account>
+EOS
+    end
   end
 
   def method_missing(sym, *args)
