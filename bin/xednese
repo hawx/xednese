@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+require 'xednese'
+require 'pry'
+
+if ARGV.size != 2
+  abort "Usage: xednese <username> <password>"
+end
+
+esendex = Esendex.new(ARGV.first, ARGV.last)
+
+puts <<EOS
+xednese: Call methods on 'esendex'; CTRL-D to exit.
+EOS
+
+binding.pry quiet: true, prompt: Pry::SIMPLE_PROMPT

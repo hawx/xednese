@@ -22,8 +22,10 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake', '~> 10.1'
   s.add_development_dependency 'minitest', '~> 5.2'
   s.add_development_dependency 'mocha', '~> 1.0'
+  s.add_development_dependency 'webmock', '~> 1.17'
 
   s.files        = %w(README.md Gemfile Rakefile LICENSE)
-  s.files       += Dir["{lib,spec}/**/*"] & `git ls-files`.split("\n")
-  s.test_files   = Dir["spec/**/*"] & `git ls-files`.split("\n")
+  s.files       += Dir["{bin,lib,scenarios,spec}/**/*"] & `git ls-files`.split("\n")
+  s.test_files   = Dir["{scenarios,spec}/**/*"] & `git ls-files`.split("\n")
+  s.executables = %w(xednese)
 end
