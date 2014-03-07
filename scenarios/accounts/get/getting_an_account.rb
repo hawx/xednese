@@ -14,7 +14,7 @@ describe 'getting an account' do
       .to_return(status: 200, body: response_body)
   }
 
-  it 'returns an Enumerable that iterates over my accounts' do
+  it 'returns the specified account' do
     returned = subject.accounts.get(account.id)
 
     returned.id.must_equal account.id

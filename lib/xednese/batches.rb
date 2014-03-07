@@ -3,6 +3,7 @@ class Esendex
   # Provides methods for working with message batches. A Batches instance is
   # Enumerable, and will only make requests when needed.
   class Batches
+    PAGE_COUNT = 25
 
     # @see Esendex#batches
     # @api private
@@ -13,11 +14,20 @@ class Esendex
     # @yield [Batch] Calls the provided block with each batch the user has
     # access to
     def each(&block)
-      Client.get(@credentials, 'v1.1/messagebatches') {|status, data|
-        Responses::Batches.deserialise(data).batches.map do |batch|
-          Batch.new(@credentials, batch)
-        end
-      }.each(&block)
+      Seq::Paged.new do |page|
+        params = {
+          startIndex: PAGE_COUNT * page,
+          count: PAGE_COUNT
+        }
+
+        Client.get(@credentials, 'v1.1/messagebatches', params) {|status, data|
+          return [] if data.nil?
+
+          Responses::Batches.deserialise(data).batches.map do |batch|
+            Batch.new(@credentials, batch)
+          end
+        }
+      end.each(&block)
     end
 
     include Enumerable

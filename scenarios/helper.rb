@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/pride'
 require 'webmock/minitest'
+require 'nokogiri'
 require 'xednese'
 
 class String
@@ -54,60 +55,6 @@ class Time
   end
 end
 
-class Account
-  def self.generate
-    new id: Guid.generate,
-        uri: Uri.generate,
-        reference: AccountReference.generate,
-        label: String.generate,
-        address: PhoneNumber.generate,
-        type: String.generate,
-        messagesremaining: Int.generate,
-        expireson: Time.generate.format,
-        role: String.generate,
-        settingsuri: Uri.generate
-  end
-
-  def initialize(hsh)
-    @hsh = hsh
-  end
-
-  def to_xml(partial = false)
-    if partial
-      <<EOS
-<account id="#{id}" uri="#{uri}">
-  <reference>#{reference}</reference>
-  <label>#{label}</label>
-  <address>#{address}</address>
-  <type>#{type}</type>
-  <messagesremaining>#{messagesremaining}</messagesremaining>
-  <expireson>#{expireson}</expireson>
-  <role>#{role}</role>
-  <settings uri="#{settingsuri}" />
-</account>
-EOS
-    else
-      <<EOS
-<?xml version="1.0" encoding="utf-8"?>
-<account id="#{id}" uri="#{uri}" xmlns="http://api.esendex.com/ns/">
-  <reference>#{reference}</reference>
-  <label>#{label}</label>
-  <address>#{address}</address>
-  <type>#{type}</type>
-  <messagesremaining>#{messagesremaining}</messagesremaining>
-  <expireson>#{expireson}</expireson>
-  <role>#{role}</role>
-  <settings uri="#{settingsuri}" />
-</account>
-EOS
-    end
-  end
-
-  def method_missing(sym, *args)
-    if @hsh.has_key?(sym)
-      return @hsh[sym]
-    end
-
-    super
-  end
-end
+require 'data/account'
+require 'data/accounts'
+require 'data/batch'

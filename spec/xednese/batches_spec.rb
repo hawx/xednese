@@ -13,9 +13,15 @@ describe Esendex::Batches do
     before {
       Esendex::Client
         .expects(:get)
-        .with(credentials, 'v1.1/messagebatches')
+        .with(credentials, 'v1.1/messagebatches', startIndex: 0, count: 25)
         .yields(200, data)
         .returns(batch_list)
+
+      Esendex::Client
+        .expects(:get)
+        .with(credentials, 'v1.1/messagebatches', startIndex: 25, count: 25)
+        .yields(200, nil)
+        .returns([])
 
       Esendex::Responses::Batches
         .expects(:deserialise)

@@ -19,7 +19,11 @@ class Esendex
         }
 
         Client.get(@credentials, 'v1.0/messageheaders', params) do |status, data|
-          Responses::MessageHeaders.deserialise(data).message_headers
+          if data.nil?
+            []
+          else
+            Responses::MessageHeaders.deserialise(data).message_headers
+          end
         end
       end
     end
@@ -35,7 +39,11 @@ class Esendex
         }
 
         Client.get(@credentials, "v1.0/inbox/messages", params) do |status, data|
-          Responses::MessageHeaders.deserialise(data).message_headers
+          if data.nil?
+            []
+          else
+            Responses::MessageHeaders.deserialise(data).message_headers
+          end
         end
       end
     end

@@ -15,9 +15,10 @@ Gem::Specification.new do |s|
     REST API.
   DESC
 
-  s.add_dependency 'seq', '~> 0.2.0'
+  s.add_dependency 'seq', '~> 0.3.0'
   s.add_dependency 'serialisable', '~> 0.1.0'
   s.add_dependency 'nokogiri', '~> 1.6'
+  s.add_dependency 'pry', '~> 0.9.12'
 
   s.add_development_dependency 'rake', '~> 10.1'
   s.add_development_dependency 'minitest', '~> 5.2'

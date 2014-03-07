@@ -5,16 +5,8 @@ describe 'getting all of my accounts' do
   let(:password) { String.generate }
   subject { Esendex.new(username, password) }
 
-  let(:accounts) { (0..100).map { Account.generate } }
-
-  let(:response_body) {
-    <<EOS
-<?xml version="1.0" encoding="utf-8"?>
-<accounts xmlns="http://api.esendex.com/ns/">
-  #{accounts.map {|a| a.to_xml(true) }.join("\n")}
-</accounts>
-EOS
-  }
+  let(:accounts) { Accounts.generate(100) }
+  let(:response_body) { accounts.to_xml  }
 
   before {
     stub_request(:get, "https://#{username}:#{password}@api.esendex.com/v1.0/accounts?")
@@ -23,7 +15,11 @@ EOS
   }
 
   it 'returns an Enumerable that iterates over my accounts' do
-    subject.accounts.entries.zip(accounts) do |returned, expected|
+    returned_accounts = subject.accounts.entries
+
+    returned_accounts.size.must_equal 100
+
+    returned_accounts.zip(accounts) do |returned, expected|
       returned.id.must_equal expected.id
       returned.reference.must_equal expected.reference
       returned.label.must_equal expected.label
