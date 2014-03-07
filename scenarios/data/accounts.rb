@@ -24,6 +24,6 @@ EOS
 EOS
     end
 
-    return str + "</accounts>"
+    str + "</accounts>"
   end
 end

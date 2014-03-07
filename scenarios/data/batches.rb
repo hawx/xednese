@@ -38,6 +38,6 @@ EOS
 EOS
     end
 
-    return str + "</messagebatches>"
+    str + "</messagebatches>"
   end
 end

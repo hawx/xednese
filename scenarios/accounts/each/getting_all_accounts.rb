@@ -5,7 +5,8 @@ describe 'getting all of my accounts' do
   let(:password) { String.generate }
   subject { Esendex.new(username, password) }
 
-  let(:accounts) { Accounts.generate(100) }
+  let(:count) { 37 }
+  let(:accounts) { Accounts.generate(count) }
   let(:response_body) { accounts.to_xml  }
 
   before {
@@ -17,7 +18,7 @@ describe 'getting all of my accounts' do
   it 'returns an Enumerable that iterates over my accounts' do
     returned_accounts = subject.accounts.entries
 
-    returned_accounts.size.must_equal 100
+    returned_accounts.size.must_equal count
 
     returned_accounts.zip(accounts) do |returned, expected|
       returned.id.must_equal expected.id
