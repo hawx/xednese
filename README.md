@@ -20,7 +20,7 @@ not be considered stable enough for general use.
 
 ## Running locally
 
-Clone the repo, then to get the run the tests:
+Clone the repo, then to run the tests:
 
 ``` bash
 $ gen install bundler
